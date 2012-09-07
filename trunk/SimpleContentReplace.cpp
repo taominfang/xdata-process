@@ -50,7 +50,7 @@ bool SimpleContentReplace::replace(istream & in,
 		for (streamsize i1 = 0; i1 < len; i1++) {
 			char c = buff[i1];
 
-			cout << c;
+			//cout << c;
 
 			if (varaibleStart) {
 
@@ -61,8 +61,13 @@ bool SimpleContentReplace::replace(istream & in,
 					map<string, string>::iterator f = keyValues.find(variable);
 					//cout << "try to replace:" << variable << endl;
 					if (f != keyValues.end()) {
+					//	cout<<"find :"<<f->second<<endl;
 						out << f->second;
 					}
+					else{
+						cout<<"not find "<<endl;
+					}
+					variable_index=0;
 				}
 
 				else if (variable_index < MAX_VARIABLE_SIZE) {

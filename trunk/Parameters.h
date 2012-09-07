@@ -39,6 +39,9 @@ public:
 		if (extra == 0) {
 			m_require_extra_one = false;
 		}
+		else{
+			m_require_extra_one=true;
+		}
 
 		if (andDepends != NULL) {
 			cout << name << " set up and depends" << endl;

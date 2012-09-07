@@ -16,9 +16,12 @@ using namespace std;
 class RegResultUsing :public RegResultProcess
 {
 public:
-	RegResultUsing();
+	RegResultUsing(const char * r);
 	virtual ~RegResultUsing();
 	virtual void process(vector<string> & data);
+
+private :
+	string m_replace_formatter;
 };
 
 #endif /* REGFORMATOUTPUTRESULT_H_ */
