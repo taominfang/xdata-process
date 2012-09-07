@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <boost/scoped_array.hpp>
-using namespace boost;
+
 class SystemUtil {
 public:
 	SystemUtil();
@@ -22,7 +22,7 @@ public:
 
 	static bool isInGroup(gid_t gid) {
 		int ngroups = getgroups(0, NULL);
-		scoped_array<gid_t> groups (new gid_t[ngroups]);
+		boost::scoped_array<gid_t> groups (new gid_t[ngroups]);
 
 
 		int val = getgroups(ngroups, groups.get());

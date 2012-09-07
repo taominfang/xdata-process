@@ -8,13 +8,20 @@
 #include "RegSearch.h"
 #include "Parameters.h"
 #include "RegResultUsing.h"
+#include "RegResultPrintOut.h"
 
 RegSearch::RegSearch() :
 		mp_processor(NULL) {
 	// TODO Auto-generated constructor stub
 
 	if (Parameters::get("awk_out_formater") != NULL) {
-		mp_processor=new RegResultUsing();
+
+		mp_processor = new RegResultUsing(Parameters::get("awk_out_formater"));
+	}
+
+	else {
+
+		mp_processor = new RegResultPrintOut();
 	}
 }
 
@@ -42,45 +49,38 @@ int RegSearch::awk_search_reg() {
 	//boost::regex expression(Parameters::get("awk_search_reg"));
 	boost::regex expression(Parameters::get("awk_search_reg"));
 
-	if (Parameters::get("awk_out_formater") != NULL) {
-		string outputString = Parameters::get("awk_out_formater");
+	if (Parameters::get("input_file") != NULL) {
+		//source is file
+		TripleBufferIFileStream inp(Parameters::get("input_file"), ios::in,
+				102400);
+		if (inp.is_open()) {
 
-		if (Parameters::get("input_file") != NULL) {
-			//source is file
-			TripleBufferIFileStream inp(Parameters::get("input_file"), ios::in,
-					102400);
-			if (inp.is_open()) {
+			TripleBufferIFileStream::const_iterator begin = inp.begin();
+			TripleBufferIFileStream::const_iterator end = inp.end();
 
-				TripleBufferIFileStream::const_iterator begin = inp.begin();
-				TripleBufferIFileStream::const_iterator end = inp.end();
+			boost::regex expression(Parameters::get("awk_search_reg"));
+			boost::regex_iterator<TripleBufferIFileStream::const_iterator> m1(
+					begin, end, expression);
+			boost::regex_iterator<TripleBufferIFileStream::const_iterator> m2;
 
-				boost::regex expression("(tr)");
-				boost::regex_iterator<TripleBufferIFileStream::const_iterator> m1(
-						begin, end, expression);
-				boost::regex_iterator<TripleBufferIFileStream::const_iterator> m2;
-
-				RegSearch processor;
-				for (; m1 != m2; m1++) {
-					file_regex_callback(*m1, processor);
-				}
-
-				//std::for_each(m1, m2, &regex_callback);
-				inp.close();
+			RegSearch processor;
+			for (; m1 != m2; m1++) {
+				file_regex_callback(*m1, processor);
 			}
+
+			//std::for_each(m1, m2, &regex_callback);
+			inp.close();
 		}
+	}
 
-		else {
-			//source is stdin, using string as the reg source
+	else {
+		//source is stdin, using string as the reg source
 
-			if (Parameters::get("split_string") != NULL) {
-				// the input will be split , by the string
-			} else {
-				//split by new line
-			}
+		if (Parameters::get("split_string") != NULL) {
+			// the input will be split , by the string
+		} else {
+			//split by new line
 		}
-
-		//boost::regex_grep(rfor, start, end, expression);
-
 	}
 
 	return 0;
@@ -89,11 +89,11 @@ int RegSearch::awk_search_reg() {
 bool RegSearch::process(
 		const boost::match_results<TripleBufferIFileStream::const_iterator>& what) {
 
-	if(mp_processor !=NULL){
+	if (mp_processor != NULL) {
 
 		vector<string> pa;
 
-		for(int i1=0,total=what.size();i1<total;i1++){
+		for (int i1 = 0, total = what.size(); i1 < total; i1++) {
 
 			pa.push_back(what[i1].str());
 

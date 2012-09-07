@@ -61,7 +61,7 @@ int Parameters::readParameter(int argc, char ** argv) {
 						i2 != p->second->m_or_depends.end(); i2++) {
 				}
 
-				//
+				//cout<<p->second->m_name<<" "<<p->second->m_require_extra_one<<" "<<argv[i1+1]<<endl;
 				if (p->second->m_require_extra_one) {
 					i1++;
 					if (i1 < argc) {

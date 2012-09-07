@@ -240,10 +240,10 @@ public:
 			seekg(startPoint, ios::beg);
 			read(m_buffer[m_current_buffer_index], length);
 
-			cout << "index:" << m_current_buffer_index << " "
-					<< m_buffer_border[m_current_buffer_index][0] << ":"
-					<< m_buffer_border[m_current_buffer_index][1] << " == "
-					<< length << endl;
+//			cout << "index:" << m_current_buffer_index << " "
+//					<< m_buffer_border[m_current_buffer_index][0] << ":"
+//					<< m_buffer_border[m_current_buffer_index][1] << " == "
+//					<< length << endl;
 
 		} //
 
