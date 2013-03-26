@@ -44,7 +44,7 @@ void init_parameter_group() {
 	// show help information
 
 	Parameters::initAdd(
-			ParameterElement("help", createStringList("--help", "-h", NULL),
+			ParameterElement("help", createStringList("--help", "-H", NULL),
 					"show help information"));
 
 	///Unit test
@@ -130,6 +130,6 @@ int main(int argc, char ** argv) {
 	} catch (std::exception& e) {
 		cerr << "exception caught: " << e.what() << endl;
 	} catch (...) {
-
+		cerr <<" unknown exception"<<endl;
 	}
 }

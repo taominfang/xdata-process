@@ -73,7 +73,7 @@ public:
 
 	static void printAll(ostream &out) {
 
-		out << "Print all parameters" << endl;
+		//out << "Print all parameters" << endl;
 
 		for (map<string, string>::iterator i1 = m_regular_parameters.begin();
 				i1 != m_regular_parameters.end(); i1++) {
