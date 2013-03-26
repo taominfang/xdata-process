@@ -13,6 +13,8 @@
 using namespace std;
 
 //typedef istream_iterator<char> IteratorType;
+
+typedef iterator<bidirectional_iterator_tag, char> bidirectional_iterator;
 class RegResultProcess {
 public:
 

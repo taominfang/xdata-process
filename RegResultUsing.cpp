@@ -14,6 +14,7 @@
 using namespace std;
 RegResultUsing::RegResultUsing(const char * r	):m_replace_formatter(r) {
 
+	cout<<"test:"<<m_replace_formatter<<endl;
 }
 
 RegResultUsing::~RegResultUsing() {
@@ -39,6 +40,7 @@ void RegResultUsing::process(vector<string> & data) {
 	stringstream sin(m_replace_formatter,stringstream::in) ;
 
 	sp.replace(sin,replaceMap	,cout);
+
 
 
 

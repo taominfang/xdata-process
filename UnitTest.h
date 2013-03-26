@@ -20,6 +20,7 @@
 #include <exception>
 
 #include "TripleBufferIFileStream.h"
+#include "CharIterator.h"
 
 using namespace std;
 class UnitTest {
@@ -53,6 +54,14 @@ public:
 		cout << "test TripleBufferIFileStream ......";
 
 		if (test_TripleBufferIFileStream()) {
+			cout << "successful" << endl;
+		} else {
+			cout << "fail" << endl;
+		}
+
+		cout << " test Char iterator....." << endl;
+
+		if (test_CharIterator()) {
 			cout << "successful" << endl;
 		} else {
 			cout << "fail" << endl;
@@ -122,12 +131,19 @@ public:
 		const char * fresult = "/tmp/SimpleFileContentReplace_result";
 
 		if (!FileUtil::isFile(finName)) {
-			cout << " file " << finName << " is not existent,exit" << endl;
-			return false;
+			cout << " file " << finName << " is not existent,create one"
+					<< endl;
+			ofstream fo(finName);
+
+			fo << "abcd abcd aaabcdabcddd" << endl;
+			fo.close();
 		}
 		if (!FileUtil::isFile(fresult)) {
-			cout << " file " << fresult << " is not existent,exit" << endl;
-			return false;
+			cout << " file " << fresult << " is not existent,create one" << endl;
+			ofstream fo(fresult);
+
+			fo << "12345 abcd aa12345dd" << endl;
+			fo.close();
 		}
 
 		ifstream fin(finName);
@@ -277,6 +293,10 @@ public:
 		}
 
 		return re;
+
+	}
+
+	bool test_CharIterator() {
 
 	}
 

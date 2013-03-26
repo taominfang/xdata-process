@@ -22,25 +22,19 @@ map<string, string> Parameters::m_regular_parameters;
 
 map<string, ParameterElement> Parameters::m_parameters_list;
 
+/**
+ * return 0, no error
+ *
+ * return 1, has errors but all errors are under control
+ *
+ * return 2, serious errors happen, discontinue running.
+ */
+
 int Parameters::readParameter(int argc, char ** argv) {
 
 	map<string, ParameterElement *> allParamters =
 			managermentPossibleParameters();
 
-//	for (map<string, ParameterElement *>::iterator i1 = allParamters.begin();
-//			i1 != allParamters.end(); i1++) {
-//		cout << i1->first << ":" << i1->second->m_name << endl;
-//		cout << "and depends:" << i1->second->m_and_depends.size() << endl;
-//		for (list<string>::iterator i2 = i1->second->m_and_depends.begin();
-//				i2 != i1->second->m_and_depends.end(); i2++) {
-//			cout << *i2 << endl;
-//		}
-//		cout << "or depends:" << i1->second->m_or_depends.size() << endl;
-//		for (list<string>::iterator i2 = i1->second->m_or_depends.begin();
-//				i2 != i1->second->m_or_depends.end(); i2++) {
-//			cout << *i2 << endl;
-//		}
-//	}
 
 	list<string> unkonwParameterList;
 	list<string> errorMessage;
