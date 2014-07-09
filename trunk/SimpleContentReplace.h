@@ -17,7 +17,7 @@ public:
 	virtual ~SimpleContentReplace();
 
 
-	bool replace(istream & in,map<string,string> & keyValues,ostream & out);
+	bool variableReplace(istream & in,map<string,string> & keyValues,ostream & out);
 private:
 
 };

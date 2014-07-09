@@ -135,14 +135,14 @@ public:
 					<< endl;
 			ofstream fo(finName);
 
-			fo << "abcd abcd aaabcdabcddd" << endl;
+			fo << "$abcd$ abcd aa$abcd$$abcd$dd" << endl;
 			fo.close();
 		}
 		if (!FileUtil::isFile(fresult)) {
 			cout << " file " << fresult << " is not existent,create one" << endl;
 			ofstream fo(fresult);
 
-			fo << "12345 abcd aa12345dd" << endl;
+			fo << "12345 abcd aa1234512345dd" << endl;
 			fo.close();
 		}
 
@@ -152,7 +152,7 @@ public:
 
 		cout << "Start replace" << endl;
 
-		if (sp.replace(fin, testing, fout)) {
+		if (sp.variableReplace(fin, testing, fout)) {
 
 			cout << "Please run diff " << foutName << " " << fresult << endl;
 		} else {

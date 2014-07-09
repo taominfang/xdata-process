@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include <boost/scoped_array.hpp>
+#include "Verbose.h"
 #include "Parameters.h"
 
 SimpleContentReplace::SimpleContentReplace() {
@@ -22,7 +23,7 @@ SimpleContentReplace::~SimpleContentReplace() {
 
 #define BUFF_SIZE 10240
 #define MAX_VARIABLE_SIZE 100
-bool SimpleContentReplace::replace(istream & in,
+bool SimpleContentReplace::variableReplace(istream & in,
 		map<string, string> & keyValues, ostream & out) {
 
 	boost::scoped_array<char> _buff(new char[BUFF_SIZE]);
@@ -36,6 +37,7 @@ bool SimpleContentReplace::replace(istream & in,
 
 	int iLineNumber=1;
 	int iCharNumber=1;
+
 
 	while (in.good()) {
 
@@ -62,10 +64,11 @@ bool SimpleContentReplace::replace(istream & in,
 					//cout << "try to replace:" << variable << endl;
 					if (f != keyValues.end()) {
 					//	cout<<"find :"<<f->second<<endl;
+						Verbose::printf("find v:[%s] replace it to [%s]\n",variable,f->second.c_str());
 						out << f->second;
 					}
 					else{
-						cout<<"not find "<<endl;
+						cerr<<"not find value for "<<variable<<endl;
 					}
 					variable_index=0;
 				}
