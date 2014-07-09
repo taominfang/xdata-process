@@ -10,11 +10,13 @@
 #include "SimpleContentReplace.h"
 #include <map>
 #include <stdio.h>
+#include "Verbose.h"
 #include <sstream>
 using namespace std;
 RegResultUsing::RegResultUsing(const char * r	):m_replace_formatter(r) {
 
-	cout<<"test:"<<m_replace_formatter<<endl;
+	Verbose::printf("out pattern:[%s]\n",r);
+
 }
 
 RegResultUsing::~RegResultUsing() {
@@ -27,8 +29,10 @@ void RegResultUsing::process(vector<string> & data) {
 		return;
 	}
 
+
+
 	map<string,string> replaceMap;
-	replaceMap["all"]=data[0];
+	replaceMap["matched_whole_string"]=data[0];
 
 	for(size_t i1=0;i1<data.size();i1++){
 		char buff[20];
@@ -39,7 +43,7 @@ void RegResultUsing::process(vector<string> & data) {
 	SimpleContentReplace sp;
 	stringstream sin(m_replace_formatter,stringstream::in) ;
 
-	sp.replace(sin,replaceMap	,cout);
+	sp.variableReplace(sin,replaceMap	,cout);
 
 
 

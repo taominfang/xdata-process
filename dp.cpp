@@ -16,9 +16,10 @@
 #include "Parameters.h"
 #include "UnitTest.h"
 #include "RegSearch.h"
+#include "Verbose.h"
+#include "system_dep_def.h"
 using namespace std;
 using namespace boost;
-
 
 dp::dp() {
 	// TODO Auto-generated constructor stub
@@ -80,8 +81,8 @@ void init_parameter_group() {
 	Parameters::initAdd(
 			ParameterElement("awk_split_by_reg",
 					createStringList("--awk_split_by_reg", NULL),
-					"Like awk -F , split the string into several sub string",
-					false, 1));
+					"Like awk -F , split the string into several column", false,
+					1));
 
 	Parameters::initAdd(
 			ParameterElement("awk_search_reg",
@@ -93,10 +94,22 @@ void init_parameter_group() {
 					createStringList("--awk_out_formater", NULL),
 					"Define the formatter for out put", false, 1, NULL,
 					createStringList("awk_search_reg", "awk_split_by_reg",
-							NULL)));
+					NULL)));
+	Parameters::initAdd(
+			ParameterElement("verbose",
+					createStringList("--verbose", "-v", NULL),
+					"Print more information to STDERR"));
+
 }
 
 int dispatch(int argc, char ** argv) throw () {
+
+	if (Parameters::get("verbose") != NULL) {
+		Verbose::enable = true;
+	}
+
+	//Verbose::printf("new line chars len:%d\n",strlen(NEW_LINE));
+
 	if (Parameters::get("help") != NULL) {
 		usage(argv[0]);
 	}
@@ -119,7 +132,9 @@ int main(int argc, char ** argv) {
 
 	int rp = Parameters::readParameter(argc, argv);
 
-	Parameters::printAll(cout);
+	if (Parameters::get("verbose") != NULL) {
+		Parameters::printAll(cout);
+	}
 	if (rp == 2) {
 		cerr << "Parameters error quit" << endl;
 		return 2;
@@ -130,6 +145,6 @@ int main(int argc, char ** argv) {
 	} catch (std::exception& e) {
 		cerr << "exception caught: " << e.what() << endl;
 	} catch (...) {
-		cerr <<" unknown exception"<<endl;
+		cerr << " unknown exception" << endl;
 	}
 }

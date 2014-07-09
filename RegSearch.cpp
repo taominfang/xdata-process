@@ -10,6 +10,7 @@
 #include "RegResultUsing.h"
 #include "RegResultPrintOut.h"
 #include "string"
+#include "Verbose.h"
 #include "system_dep_def.h"
 
 RegSearch::RegSearch() :
@@ -64,7 +65,7 @@ int RegSearch::awk_search_reg() {
 	if (Parameters::get("input_file") != NULL) {
 		//source is file
 		TripleBufferIFileStream inp(Parameters::get("input_file"), ios::in,
-				DEFAULT_TRIPLE_BUFFER_SIZE);
+		DEFAULT_TRIPLE_BUFFER_SIZE);
 		if (inp.is_open()) {
 
 			TripleBufferIFileStream::const_iterator begin = inp.begin();
@@ -84,6 +85,7 @@ int RegSearch::awk_search_reg() {
 	}
 
 	else {
+		Verbose::println("NO input file, will read from STDIN ");
 		//source is stdin, using string as the reg source
 		const char * splitStr = Parameters::get("split_string");
 
@@ -124,15 +126,12 @@ int RegSearch::awk_search_reg() {
 
 			cin.read(&inputBuffer[iReadIndex], 1);
 
-			if (!cin.good()) {
-				break;
-			}
-
 			if (inputBuffer[iReadIndex] == splitStr[compareIndex]) {
 				compareIndex++;
 				if (compareIndex == splitStrLen) {
 
 					inputBuffer[iReadIndex] = 0;
+					Verbose::printf("INPUT:%s\n", inputBuffer);
 					string data = inputBuffer;
 
 					boost::regex_iterator<string::iterator> m1(data.begin(),
@@ -151,9 +150,16 @@ int RegSearch::awk_search_reg() {
 				compareIndex = 0;
 			}
 
-			compareIndex++;
+			if (!cin.good()) {
+				//Verbose::println("no good");
+				break;
+			}
+
+			iReadIndex++;
 
 		}
+
+		Verbose::println("Done");
 
 	}
 

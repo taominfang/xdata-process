@@ -14,20 +14,17 @@
 
 3. regular search and replace:
 
-[ Debug]$ ./xdata-process --awk_search_reg '(\d+)([a-z]+)' -i /tmp/reg_replace_sample.txt 
-[awk_search_reg]=(\d+)([a-z]+)
-[input_file]=/tmp/reg_replace_sample.txt
-<Whole string>[123456abcd]<$1$>[123456]<$2$>[abcd]
-<Whole string>[2345689add]<$1$>[2345689]<$2$>[add]
-<Whole string>[123abcdd]<$1$>[123]<$2$>[abcdd]
-<Whole string>[89aabbc]<$1$>[89]<$2$>[aabbc]
-[ Debug]$ ./xdata-process --awk_search_reg '(\d+)([a-z]+)' -i /tmp/reg_replace_sample.txt --awk_out_formater '$1$  eee $2$\n'
-[awk_out_formater]=$1$  eee $2$\n
-[awk_search_reg]=(\d+)([a-z]+)
-[input_file]=/tmp/reg_replace_sample.txt
-test:$1$  eee $2$\n
-123456  eee abcd
-2345689  eee add
-123  eee abcdd
-89  eee aabbc
+echo '<g:image_link><![CDATA[http://www.kellycodetectors.com/cart/image.php?model=n1219-19009&manufacturer=detectorpro&type=productpage1&file=n1219-19009_1f.jpg]]></g:image_link>' |~/Documents/c_project/xdata-process/Debug/xdata-process --awk_search_reg ".*model=(.*?)&.*" --awk_out_formater 'image_url:$matched_whole_string$\npid:$1$\n\n' -v
+[awk_out_formater]=image_url:$matched_whole_string$\npid:$1$\n\n
+[awk_search_reg]=.*model=(.*?)&.*
+[verbose]=1
+out pattern:[image_url:$matched_whole_string$\npid:$1$\n\n]
+NO input file, will read from STDIN 
+INPUT:<g:image_link><![CDATA[http://www.kellycodetectors.com/cart/image.php?model=n1219-19009&manufacturer=detectorpro&type=productpage1&file=n1219-19009_1f.jpg]]></g:image_link>
+find v:[matched_whole_string] replace it to [<g:image_link><![CDATA[http://www.kellycodetectors.com/cart/image.php?model=n1219-19009&manufacturer=detectorpro&type=productpage1&file=n1219-19009_1f.jpg]]></g:image_link>]
+image_url:<g:image_link><![CDATA[http://www.kellycodetectors.com/cart/image.php?model=n1219-19009&manufacturer=detectorpro&type=productpage1&file=n1219-19009_1f.jpg]]></g:image_link>
+find v:[1] replace it to [n1219-19009]
+pid:n1219-19009
+
+Done
 
