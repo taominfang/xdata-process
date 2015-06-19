@@ -1,0 +1,1 @@
+currently awk is not satisfied to my requirement. This program can do some regular searching and replace.
